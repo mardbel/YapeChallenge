@@ -5,28 +5,43 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.yapechallenge.databinding.FragmentListBinding
+import dagger.hilt.android.AndroidEntryPoint
+import viewmodels.ReceiptsViewModel
 
+@AndroidEntryPoint
 class ListFragment : Fragment() {
 
+    private val viewModel by viewModels<ReceiptsViewModel>()
     private lateinit var binding: FragmentListBinding
+    private lateinit var mAdapter : ReceiptListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentListBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentListBinding.bind(view)
 
-        binding.btnNavigation.setOnClickListener {
-            val action = ListFragmentDirections.actionListFragmentToDetailFragment("asd", "martin", "delbel", "labolsa")
-            view.findNavController().navigate(action)
+        binding.rvReceiptsList.layoutManager = LinearLayoutManager(requireContext())
+        mAdapter = ReceiptListAdapter(
+            onItemClick = { id -> viewModel.getReceiptById(id) }
+        )
+
+        binding.rvReceiptsList.adapter = mAdapter
+        viewModel.getAllTheReceipts()
+
+        viewModel.receiptsList.observe(viewLifecycleOwner) {
+            mAdapter.setItems(it)
         }
 
     }
