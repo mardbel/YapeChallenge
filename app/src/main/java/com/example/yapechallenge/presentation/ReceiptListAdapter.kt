@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.yapechallenge.R
 import com.example.yapechallenge.databinding.ReceiptListViewholderBinding
 import model.Receipt
@@ -36,14 +37,11 @@ class ReceiptListAdapter(val onItemClick: (String)-> Unit,)
         view: View
     ) : RecyclerView.ViewHolder(view) {
 
-
-        val binding = ReceiptListViewholderBinding.bind(view)
+        private val binding = ReceiptListViewholderBinding.bind(view)
 
         fun bind(item: Receipt) {
-
                 binding.tvName.text = item.name
-                //imageReceipt = item.image
+                Glide.with(binding.imgHomeHolder.context).load(item.image).into(binding.imgHomeHolder)
             }
-
         }
     }
