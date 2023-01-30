@@ -9,8 +9,8 @@ import com.example.yapechallenge.R
 import com.example.yapechallenge.databinding.ReceiptListViewholderBinding
 import model.Receipt
 
-class ReceiptListAdapter(val onItemClick: (String)-> Unit,)
-    : RecyclerView.Adapter<ReceiptListAdapter.ReceiptsViewHolder>(){
+class ReceiptListAdapter(val onItemClick: (String) -> Unit) :
+    RecyclerView.Adapter<ReceiptListAdapter.ReceiptsViewHolder>() {
 
     private var mItems: List<Receipt> = listOf()
 
@@ -21,7 +21,13 @@ class ReceiptListAdapter(val onItemClick: (String)-> Unit,)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReceiptsViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return ReceiptsViewHolder(layoutInflater.inflate(R.layout.receipt_list_viewholder, parent, false))
+        return ReceiptsViewHolder(
+            layoutInflater.inflate(
+                R.layout.receipt_list_viewholder,
+                parent,
+                false
+            ), onItemClick
+        )
 
     }
 
@@ -34,14 +40,18 @@ class ReceiptListAdapter(val onItemClick: (String)-> Unit,)
     }
 
     class ReceiptsViewHolder(
-        view: View
+        view: View,
+        val onItemClick: (String) -> Unit
     ) : RecyclerView.ViewHolder(view) {
 
         private val binding = ReceiptListViewholderBinding.bind(view)
 
         fun bind(item: Receipt) {
-                binding.tvName.text = item.name
-                Glide.with(binding.imgHomeHolder.context).load(item.image).into(binding.imgHomeHolder)
+            binding.tvName.text = item.name
+            Glide.with(binding.imgHomeHolder.context).load(item.image).into(binding.imgHomeHolder)
+            binding.root.setOnClickListener {
+                onItemClick(item.id)
             }
         }
     }
+}

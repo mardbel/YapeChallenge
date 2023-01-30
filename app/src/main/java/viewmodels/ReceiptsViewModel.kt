@@ -23,8 +23,11 @@ class ReceiptsViewModel @Inject constructor(private val receiptsRepository: Rece
         }
     }
 
-    fun getReceiptById(id: String) {
-
+    fun getReceiptById(id: String) : Receipt? {
+        _receiptsList.value?.forEach {
+            if (it.id == id) return it
+        }
+        return null
     }
 
     private val _state = MutableLiveData<State>()

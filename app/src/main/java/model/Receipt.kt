@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class Receipt (
     @SerializedName("name") val name: String,
     @SerializedName("id")val id: String,
-    @SerializedName("latitud")val latitude: Double,
-    @SerializedName("longitud")val longitude: Double,
+    @SerializedName("latitud")val latitude: String,
+    @SerializedName("longitud")val longitude: String,
     @SerializedName("image")val image: String
 ): Parcelable
