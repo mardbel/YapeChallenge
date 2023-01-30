@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -50,6 +51,12 @@ class ListFragment : Fragment() {
 
         viewModel.receiptsList.observe(viewLifecycleOwner) {
             mAdapter.setItems(it)
+        }
+        binding.etFilter.addTextChangedListener { userFilter ->
+             viewModel.receiptsList.observe(viewLifecycleOwner) {
+                 val receiptsFiltered = it.filter { receipt -> receipt.name.lowercase().contains(userFilter.toString().lowercase()) }
+                 mAdapter.updateReceipts(receiptsFiltered)
+             }
         }
 
     }

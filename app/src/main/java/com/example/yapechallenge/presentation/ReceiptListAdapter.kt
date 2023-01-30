@@ -39,6 +39,11 @@ class ReceiptListAdapter(val onItemClick: (String) -> Unit) :
         return mItems.size
     }
 
+    fun updateReceipts(receiptList: List<Receipt>) {
+        mItems = receiptList
+        notifyDataSetChanged()
+    }
+
     class ReceiptsViewHolder(
         view: View,
         val onItemClick: (String) -> Unit

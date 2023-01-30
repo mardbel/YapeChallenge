@@ -6,23 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Martin\.android\avd\Nexus_10_API_Tiramisu.avd" />
+            <type value="SERIAL_NUMBER" />
+            <value value="R58M94VKRBA" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <targetSelectedWithDropDown>
-      <Target>
-        <type value="QUICK_BOOT_TARGET" />
-        <deviceKey>
-          <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Martin\.android\avd\Nexus_10_API_Tiramisu.avd" />
-          </Key>
-        </deviceKey>
-      </Target>
-    </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2023-01-30T03:41:43.975632100Z" />
+    <timeTargetWasSelectedWithDropDown value="2023-01-30T23:34:12.012313200Z" />
   </component>
 </project>
