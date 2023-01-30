@@ -31,11 +31,11 @@
             app:argType="string"
             app:nullable="true"/>
         <argument
-            android:name="name"
+            android:name="description"
             app:argType="string"
             app:nullable="true"/>
         <argument
-            android:name="description"
+            android:name="name"
             app:argType="string"
             app:nullable="true"/>
         <argument

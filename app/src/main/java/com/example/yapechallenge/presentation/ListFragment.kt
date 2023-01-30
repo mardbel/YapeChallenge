@@ -39,7 +39,7 @@ class ListFragment : Fragment() {
             onItemClick = {
                     id -> val receipt = viewModel.getReceiptById(id)
                     val action = ListFragmentDirections.actionListFragmentToDetailFragment(
-                        receipt?.id, receipt?.image, receipt?.name, receipt?.name, receipt?.longitude, receipt?.latitude
+                        receipt?.id, receipt?.image, receipt?.description, receipt?.name, receipt?.longitude, receipt?.latitude
                     )
                     view.findNavController().navigate(action)
             }
