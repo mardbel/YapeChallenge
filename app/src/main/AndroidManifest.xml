@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YapeChallenge"
         android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA0ocHU-s4wDsySnG0jmbVQAb55V1XGN48"/>
+
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"

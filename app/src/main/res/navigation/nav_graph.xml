@@ -53,7 +53,12 @@
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" >
         <argument
-            android:name="location"
-            app:argType="string" />
+            android:name="longitude"
+            app:argType="string"
+            app:nullable="true"/>
+        <argument
+            android:name="latitude"
+            app:argType="string"
+            app:nullable="true"/>
     </fragment>
 </navigation>
