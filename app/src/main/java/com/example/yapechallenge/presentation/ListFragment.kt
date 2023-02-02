@@ -12,7 +12,9 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.yapechallenge.R
 import com.example.yapechallenge.databinding.FragmentListBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import viewmodels.ReceiptsViewModel
 
@@ -35,6 +37,9 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentListBinding.bind(view)
 
+        viewModel.loadingState.observe(viewLifecycleOwner) {
+            setCustomProgressBarVisibility(it)
+        }
         binding.rvReceiptsList.layoutManager = LinearLayoutManager(requireContext())
         mAdapter = ReceiptListAdapter(
             onItemClick = {
@@ -47,8 +52,10 @@ class ListFragment : Fragment() {
         )
 
         binding.rvReceiptsList.adapter = mAdapter
+
         viewModel.getAllTheReceipts()
 
+        setUpObservers()
         viewModel.receiptsList.observe(viewLifecycleOwner) {
             mAdapter.setItems(it)
         }
@@ -58,7 +65,45 @@ class ListFragment : Fragment() {
                  mAdapter.updateReceipts(receiptsFiltered)
              }
         }
+    }
 
+    private fun setUpObservers() {
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is ReceiptsViewModel.State.Success -> {
+                    mAdapter.setItems(it.receipts)
+                }
+                is ReceiptsViewModel.State.Failure -> {
+                    apiErrorView()
+                }
+            }
+
+        }
+
+    }
+
+    private fun apiErrorView() {
+        MaterialAlertDialogBuilder(requireActivity().applicationContext)
+            .setTitle(R.string.error)
+            .setMessage(R.string.api_error_message)
+            .setPositiveButton(getString(R.string.retry)) { dialog, _ ->
+                viewModel.getAllTheReceipts()
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    fun setCustomProgressBarVisibility(state: Boolean) {
+        if (state) showLoadingSpinner()
+        else hideLoadingSpinner()
+    }
+
+    private fun showLoadingSpinner() {
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideLoadingSpinner() {
+        binding.progressBar.visibility = View.GONE
     }
 
 }
