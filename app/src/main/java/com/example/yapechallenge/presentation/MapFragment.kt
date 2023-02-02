@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.example.yapechallenge.R
 import com.example.yapechallenge.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,6 +21,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var map : GoogleMap
     lateinit var binding: FragmentMapBinding
+    private val args : MapFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,12 +37,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        val currentReceiptOrigin = LatLng(-34.0, 151.0)
+        val currentLat = args.latitude
+        val currentLong = args.longitude
+
+        val currentReceiptOrigin = LatLng(currentLat!!.toDouble(), currentLong!!.toDouble())
         map.addMarker(
             MarkerOptions()
-                .position(currentReceiptOrigin)
-                .title("Marker in Sydney"))
-        map.moveCamera(CameraUpdateFactory.newLatLng(currentReceiptOrigin))
+                .position(currentReceiptOrigin))
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentReceiptOrigin, 10f), 4000, null)
+        //moveCamera(CameraUpdateFactory.newLatLng(currentReceiptOrigin))
     }
 
 }
