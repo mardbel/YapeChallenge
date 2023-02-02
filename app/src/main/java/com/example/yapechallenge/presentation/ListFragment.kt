@@ -73,16 +73,16 @@ class ListFragment : Fragment() {
                     mAdapter.setItems(it.receipts)
                 }
                 is ReceiptsViewModel.State.Failure -> {
-                    apiErrorView()
+                    apiErrorView(it.cause)
                 }
             }
         }
     }
 
-    private fun apiErrorView() {
+    private fun apiErrorView(cause: String) {
         MaterialAlertDialogBuilder(requireActivity().applicationContext)
             .setTitle(R.string.error)
-            .setMessage(R.string.api_error_message)
+            .setMessage(cause)
             .setPositiveButton(getString(R.string.retry)) { dialog, _ ->
                 viewModel.getAllTheReceipts()
                 dialog.dismiss()

@@ -33,7 +33,7 @@ class ReceiptsViewModel @Inject constructor(private val receiptRepositoryImp: Re
                 _state.value = State.Success(response.receipt)
                 _receiptsList.value = response.receipt
                 _loadingState.value = false
-            } else _state.value = State.Failure(Throwable(response.message))
+            } else _state.value = State.Failure(response.message)
         }
     }
 
@@ -46,6 +46,6 @@ class ReceiptsViewModel @Inject constructor(private val receiptRepositoryImp: Re
 
     sealed class State {
         class Success(val receipts: List<Receipt>) : State()
-        class Failure(val cause: Throwable) : State()
+        class Failure(val cause: String) : State()
     }
 }
