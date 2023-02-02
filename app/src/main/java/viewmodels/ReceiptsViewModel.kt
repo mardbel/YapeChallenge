@@ -31,6 +31,7 @@ class ReceiptsViewModel @Inject constructor(private val receiptRepositoryImp: Re
             val response = receiptRepositoryImp.getReceipts()
             if (response.success) {
                 _state.value = State.Success(response.receipt)
+                _receiptsList.value = response.receipt
                 _loadingState.value = false
             } else _state.value = State.Failure(Throwable(response.message))
         }

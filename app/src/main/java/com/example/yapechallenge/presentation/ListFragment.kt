@@ -52,7 +52,6 @@ class ListFragment : Fragment() {
         )
 
         binding.rvReceiptsList.adapter = mAdapter
-
         viewModel.getAllTheReceipts()
 
         setUpObservers()
@@ -77,9 +76,7 @@ class ListFragment : Fragment() {
                     apiErrorView()
                 }
             }
-
         }
-
     }
 
     private fun apiErrorView() {
@@ -93,7 +90,7 @@ class ListFragment : Fragment() {
             .show()
     }
 
-    fun setCustomProgressBarVisibility(state: Boolean) {
+    private fun setCustomProgressBarVisibility(state: Boolean) {
         if (state) showLoadingSpinner()
         else hideLoadingSpinner()
     }
