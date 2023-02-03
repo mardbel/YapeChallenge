@@ -37,27 +37,6 @@ class ReceiptsViewModelTest {
         Dispatchers.resetMain()
     }
 
-    /*@Test
-    fun `given getAllTheReceipts() then should receive a list from the repository` () {
-        //Arrange
-        val list = listOf<Receipt>(mock())
-        val apiResponse = mock<ReceiptServiceResponse>{
-            on { receipt } doReturn list
-            on { success } doReturn true
-        }
-        val repository = mock<ReceiptRepository>{
-            onBlocking { getReceipts() } doReturn apiResponse
-        }
-        var viewmodel = ReceiptsViewModel(repository)
-
-        //Act
-        viewmodel.getAllTheReceipts()
-        val result = viewmodel.receiptsList.getOrAwaitValue()
-
-        //Assert
-        assertThat(result).isEqualTo(list)
-    }*/
-
     @Test
     fun `given getAllTheReceipts() when is not success then should post state in failure` () {
         //Arrange
