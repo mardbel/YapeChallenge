@@ -18,6 +18,8 @@ class ReceiptsViewModel @Inject constructor(private val receiptRepository: Recei
     val receiptsList: LiveData<List<Receipt>>
         get() = _receiptsList
 
+    private var recipesList = listOf<Receipt>()
+
     private val _loadingState = MutableLiveData<Boolean>().apply {  postValue(true) }
     val loadingState: LiveData<Boolean> get() = _loadingState
     private val _state = MutableLiveData<State>()
@@ -27,25 +29,24 @@ class ReceiptsViewModel @Inject constructor(private val receiptRepository: Recei
     fun getAllTheReceipts() {
         _loadingState.value = true
         viewModelScope.launch {
-            delay(2000)
             val response = receiptRepository.getReceipts()
             if (response.success) {
+                recipesList = response.receipt
                 _state.value = State.Success(response.receipt)
-                _receiptsList.value = response.receipt
+
                 _loadingState.value = false
             } else _state.value = State.Failure(response.message)
         }
     }
 
     fun getReceiptById(id: String) : Receipt? {
-        _receiptsList.value?.forEach {
-            if (it.id == id) return it
+        return recipesList.firstOrNull{
+            it.id == id
         }
-        return null
     }
 
     sealed class State {
-        class Success(val receipts: List<Receipt>) : State()
-        class Failure(val cause: String) : State()
+        data class Success(val receipts: List<Receipt>) : State()
+        data class Failure(val cause: String) : State()
     }
 }
