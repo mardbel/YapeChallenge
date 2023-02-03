@@ -20,7 +20,7 @@ class ListFragment : Fragment() {
 
     private val viewModel by viewModels<ReceiptsViewModel>()
     private lateinit var binding: FragmentListBinding
-    private lateinit var mAdapter : ReceiptListAdapter
+    private lateinit var mAdapter : RecipeListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,13 +38,18 @@ class ListFragment : Fragment() {
             setCustomProgressBarVisibility(it)
         }
         binding.rvReceiptsList.layoutManager = LinearLayoutManager(requireContext())
-        mAdapter = ReceiptListAdapter(
-            onItemClick = {
-                    id -> val receipt = viewModel.getReceiptById(id)
-                    val action = ListFragmentDirections.actionListFragmentToDetailFragment(
-                        receipt?.id, receipt?.image, receipt?.description, receipt?.name, receipt?.longitude, receipt?.latitude
-                    )
-                    view.findNavController().navigate(action)
+        mAdapter = RecipeListAdapter(
+            onItemClick = { id ->
+                val receipt = viewModel.getReceiptById(id)
+                val action = ListFragmentDirections.actionListFragmentToDetailFragment(
+                    receipt?.id,
+                    receipt?.image,
+                    receipt?.description,
+                    receipt?.name,
+                    receipt?.longitude,
+                    receipt?.latitude
+                )
+                view.findNavController().navigate(action)
             }
         )
 
@@ -52,14 +57,18 @@ class ListFragment : Fragment() {
         viewModel.getAllTheReceipts()
 
         setUpObservers()
-        viewModel. receiptsList.observe(viewLifecycleOwner) {
-            mAdapter.setItems(it)
-        }
         binding.etFilter.addTextChangedListener { userFilter ->
-             viewModel.receiptsList.observe(viewLifecycleOwner) {
-                 val receiptsFiltered = it.filter { receipt -> receipt.name.lowercase().contains(userFilter.toString().lowercase()) }
-                 mAdapter.updateReceipts(receiptsFiltered)
-             }
+            viewModel.state.observe(viewLifecycleOwner) {
+                when (it) {
+                    is ReceiptsViewModel.State.Success -> {
+                        val recipesFiltered = it.recipes.filter { receipt ->
+                            receipt.name.lowercase().contains(userFilter.toString().lowercase())
+                        }
+                            mAdapter.updateRecipes(recipesFiltered)
+
+                    }
+                }
+            }
         }
     }
 
@@ -67,7 +76,7 @@ class ListFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) {
             when (it) {
                 is ReceiptsViewModel.State.Success -> {
-                    mAdapter.setItems(it.receipts)
+                    mAdapter.setItems(it.recipes)
                 }
                 is ReceiptsViewModel.State.Failure -> {
                     apiErrorView(it.cause)
@@ -99,5 +108,4 @@ class ListFragment : Fragment() {
     private fun hideLoadingSpinner() {
         binding.progressBar.visibility = View.GONE
     }
-
 }

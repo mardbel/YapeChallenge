@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import model.Receipt
-import model.ReceiptServiceResponse
+import model.Recipe
+import model.RecipeServiceResponse
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -62,12 +62,12 @@ class ReceiptsViewModelTest {
     fun `given getAllTheReceipts() when is not success then should post state in failure` () {
         //Arrange
         val errorMessage = "error"
-        val apiResponse = mock<ReceiptServiceResponse>{
+        val apiResponse = mock<RecipeServiceResponse>{
             on { message } doReturn errorMessage
             on { success } doReturn false
         }
         val repository = mock<ReceiptRepository>{
-            onBlocking { getReceipts() } doReturn apiResponse
+            onBlocking { getRecipes() } doReturn apiResponse
         }
         var viewmodel = ReceiptsViewModel(repository)
 
@@ -82,13 +82,13 @@ class ReceiptsViewModelTest {
     @Test
     fun `given getAllTheReceipts() when success then should post success state` () {
         //Arrange
-        val list = listOf<Receipt>(mock())
-        val apiResponse = mock<ReceiptServiceResponse>{
-            on { receipt } doReturn list
+        val list = listOf<Recipe>(mock())
+        val apiResponse = mock<RecipeServiceResponse>{
+            on { recipe } doReturn list
             on { success } doReturn true
         }
         val repository = mock<ReceiptRepository>{
-            onBlocking { getReceipts() } doReturn apiResponse
+            onBlocking { getRecipes() } doReturn apiResponse
         }
         var viewmodel = ReceiptsViewModel(repository)
 
@@ -103,16 +103,16 @@ class ReceiptsViewModelTest {
     @Test
     fun `given getReceiptById() when it is found then it should return it` () {
         //Arrange
-        val recipe = mock<Receipt> {
+        val recipe = mock<Recipe> {
             on { id } doReturn "3"
         }
-        val list = listOf<Receipt>(recipe)
-        val apiResponse = mock<ReceiptServiceResponse>{
-            on { receipt } doReturn list
+        val list = listOf<Recipe>(recipe)
+        val apiResponse = mock<RecipeServiceResponse>{
+            on { this.recipe } doReturn list
             on { success } doReturn true
         }
         val repository = mock<ReceiptRepository>{
-            onBlocking { getReceipts() } doReturn apiResponse
+            onBlocking { getRecipes() } doReturn apiResponse
         }
         var viewmodel = ReceiptsViewModel(repository)
 
@@ -128,13 +128,13 @@ class ReceiptsViewModelTest {
     fun `given getReceiptById() when it not is found then it should return null` () {
         //Arrange
 
-        val list = listOf<Receipt>()
-        val apiResponse = mock<ReceiptServiceResponse>{
-            on { receipt } doReturn list
+        val list = listOf<Recipe>()
+        val apiResponse = mock<RecipeServiceResponse>{
+            on { recipe } doReturn list
             on { success } doReturn true
         }
         val repository = mock<ReceiptRepository>{
-            onBlocking { getReceipts() } doReturn apiResponse
+            onBlocking { getRecipes() } doReturn apiResponse
         }
         var viewmodel = ReceiptsViewModel(repository)
 

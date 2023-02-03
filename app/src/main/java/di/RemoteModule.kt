@@ -41,7 +41,7 @@ class RemoteModule {
     }
 
     @Provides
-    fun providesReceiptsRepository(remoteService: ReceiptService): ReceiptRepository {
+    fun providesRecipesRepository(remoteService: ReceiptService): ReceiptRepository {
         return ReceiptRepositoryImp(remoteService)
     }
 

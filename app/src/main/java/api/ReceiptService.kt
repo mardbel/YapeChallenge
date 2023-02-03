@@ -1,11 +1,11 @@
 package api
 
-import model.ReceiptServiceResponse
+import model.RecipeServiceResponse
 import retrofit2.http.GET
 
 interface ReceiptService {
 
     @GET("receipts")
-    suspend fun getReceipts(): ReceiptServiceResponse
+    suspend fun getReceipts(): RecipeServiceResponse
 
 }

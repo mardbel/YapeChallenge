@@ -6,23 +6,23 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import model.ReceiptServiceResponse
+import model.RecipeServiceResponse
 import org.junit.Test
 
-class ReceiptRepositoryTest {
+class RecipeRepositoryTest {
 
     @ExperimentalCoroutinesApi
     @Test
      fun `when getReceipt() then should receive a list from the service` () = runTest{
         //Arrange
-        val response = mock<ReceiptServiceResponse>()
+        val response = mock<RecipeServiceResponse>()
         val service = mock<ReceiptService>{
             onBlocking { getReceipts() } doReturn response
         }
         val repository = ReceiptRepositoryImp(service)
 
         //Act
-        val result = repository.getReceipts()
+        val result = repository.getRecipes()
 
         //Assert
         assertThat(result).isEqualTo(response)

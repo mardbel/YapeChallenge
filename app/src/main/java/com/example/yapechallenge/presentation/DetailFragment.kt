@@ -36,7 +36,7 @@ class DetailFragment : Fragment() {
         val textViewDescription = binding.tvDescription
         textViewDescription.text = args.description
 
-        binding.linLayLocation.setOnClickListener {
+        binding.lonLatLocation.setOnClickListener {
             val action = DetailFragmentDirections.actionDetailFragmentToMapFragment(
                 args.longitude, args.latitude
             )

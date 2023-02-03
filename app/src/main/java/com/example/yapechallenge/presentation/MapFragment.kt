@@ -45,7 +45,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             MarkerOptions()
                 .position(currentReceiptOrigin))
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentReceiptOrigin, 10f), 4000, null)
-        //moveCamera(CameraUpdateFactory.newLatLng(currentReceiptOrigin))
     }
-
 }

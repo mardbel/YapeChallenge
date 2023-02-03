@@ -1,8 +1,8 @@
 package repositories
 
-import model.ReceiptServiceResponse
+import model.RecipeServiceResponse
 
 interface ReceiptRepository {
 
-    suspend fun getReceipts(): ReceiptServiceResponse
+    suspend fun getRecipes(): RecipeServiceResponse
 }
