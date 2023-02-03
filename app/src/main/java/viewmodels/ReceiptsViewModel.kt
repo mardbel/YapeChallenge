@@ -8,11 +8,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.Receipt
-import repositories.ReceiptRepositoryImp
+import repositories.ReceiptRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class ReceiptsViewModel @Inject constructor(private val receiptRepositoryImp: ReceiptRepositoryImp) : ViewModel() {
+class ReceiptsViewModel @Inject constructor(private val receiptRepository: ReceiptRepository) : ViewModel() {
 
     private val _receiptsList = MutableLiveData<List<Receipt>>()
     val receiptsList: LiveData<List<Receipt>>
@@ -28,7 +28,7 @@ class ReceiptsViewModel @Inject constructor(private val receiptRepositoryImp: Re
         _loadingState.value = true
         viewModelScope.launch {
             delay(2000)
-            val response = receiptRepositoryImp.getReceipts()
+            val response = receiptRepository.getReceipts()
             if (response.success) {
                 _state.value = State.Success(response.receipt)
                 _receiptsList.value = response.receipt
