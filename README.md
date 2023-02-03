@@ -1,18 +1,17 @@
 # YapeChallenge
-=======
 
-App para el reto de codigo de Yape, entregada el 3/2/23
+App para el reto de codigo de Yape, entregada el 3/2/23.
 
-El proyecto cuenta con clean architecture buscando independencia del codigo, estructuracion, bajo acoplamiento y facilidad al realizar testing.
-Para la capa de presentacion se utiliza mvvm.
+El projecto fue desarrollado siguiendo los principios de Clean Architecture, dividiendo el mismo en diferentes capas, con el objetivo de reducir el acoplamiento de clases y favorecer el testing. Para la capa de presentacion se implementa MVVM.
 
-En cuanto a librerias externas, se utiliza rtrofit para la comunicacion remota.
-Siguiendo los principios SOLID, se utiliza el concepto de inyeccion de dependencias para lograr codigo desacoplado y facil de testear. La libreria seleccionada para este fin es Dagger Hilt.
+Se utiliza el principio de single Activity, con navegacion entre fragments para facilitar la implementacion de la navegacion y transiciones entre pantallas.
 
-Tambien se utiliza el prioncipio de single Activity, con navegacion entre fragments para facilitar la implementacion de la navegacion y facilitar las transiciones entre pantallas.
 
-Para cargar imagenes se utiliza Glide.
+Siguiendo los principios SOLID, se utiliza el concepto de inyeccion de dependencias para lograr codigo desacoplado y facil de testear.
 
-En la pantalla de caraga de mapas se utiliza la libreria de maps proporcionada por google.
+## Dependencias
+El projecto usa diferentes librerias de Jetpack, quiza las que mas valen la pena destacar es `navigation` usada para la navegacion entre pantallas y `Hilt` para la injeccion de dependencias.
 
-Para los test unitarios se utiliza la libreria de google.truth con el fin de facilitar la lectura de los mismos.
+Para la comunicacion con la API se utiliza `retrofit`, mientras que `Glide` es utilizado para la carga de imagenes remotas. `Google Maps` fue la libreria elegida para renderizar el mapa.
+
+Para los test unitarios se utiliza `Google Truth` para las aserciones y `Mockito` como mock framework.
